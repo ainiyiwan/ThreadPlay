@@ -1,5 +1,7 @@
 package zy.com.threadplay;
 
+import android.util.Log;
+
 import java.util.Vector;
 import java.lang.Runnable;
 
@@ -14,24 +16,24 @@ public class QueuedThreads {
 
 	private QueuedThreads(){
 		
-		new Thread(new Runnable(){
-
-			public void run(){
-				while( !Thread.interrupted() ){
-					try{
-						String msg = QueuedThreads.this.get();
-						if(msg != null){
-							////
-							System.out.println(msg);
-						}
-					}catch(Exception e){
-
-					}
-				}
-			}
-
-		}
-		).start();
+//		new Thread(new Runnable(){
+//
+//			public void run(){
+//				while( !Thread.interrupted() ){
+//					try{
+//						String msg = QueuedThreads.this.get();
+//						if(msg != null){
+//							////
+//							System.out.println(msg);
+//						}
+//					}catch(Exception e){
+//
+//					}
+//				}
+//			}
+//
+//		}
+//		).start();
 
 	}
 	
@@ -77,6 +79,7 @@ public class QueuedThreads {
 		try {
 			synchronized (getLock) {
 				if ( messageQueue.isEmpty() ) {
+					Log.i("tag", "没有数据，开始等待");
 					getLock.wait(1000*20);
 				}
 			}
